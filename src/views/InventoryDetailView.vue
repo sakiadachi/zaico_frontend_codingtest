@@ -32,39 +32,30 @@
 </template>
 
 <script setup lang="ts">
+import { useInventoryStore } from '@/stores/inventory'
 import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute } from 'vue-router'
 
-interface InventoryItem {
-  id: number
-  title: string
-  quantity: number
-  unit: string
-  category: string
-  place: string
-  item_image: {
-    url: string
-  }
-}
-
 const route = useRoute()
-const inventory = ref<InventoryItem | null>(null)
+const inventoryStore = useInventoryStore()
+const { inventory } = storeToRefs(inventoryStore)
+
 const isLoading = ref(false)
 
 const getInventoryDetail = async () => {
   isLoading.value = true
   try {
     const response = await axios.get(
-      `https://web.zaico.co.jp/api/v1/inventories/${route.params.id}`,
+      `${import.meta.env.VITE_API_ENDPOINT}/inventories/${route.params.id}`,
       {
         headers: {
           Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`,
         },
       },
     )
-    inventory.value = response.data
-    console.log(response.data)
+    inventoryStore.updateInventory(response.data)
   } catch (error) {
     console.error(error)
   } finally {
@@ -74,6 +65,10 @@ const getInventoryDetail = async () => {
 
 onMounted(() => {
   getInventoryDetail()
+})
+
+onBeforeUnmount(() => {
+  inventoryStore.$reset()
 })
 </script>
 

@@ -1,5 +1,11 @@
 <template>
   <main>
+    <h2>在庫追加</h2>
+    <form @submit.prevent="createNewItem">
+      <label for="title">タイトル: </label>
+      <input id="title" v-model.trim="newTitle" type="text" name="title" required />
+      <button type="submit">作成</button>
+    </form>
     <template v-if="isLoading">
       <div class="loading">データを読み込み中...</div>
     </template>
@@ -32,33 +38,27 @@
 </template>
 
 <script setup lang="ts">
+import { useInventoriesStore, type InventoryItem } from '@/stores/inventory'
 import axios from 'axios'
-import { ref, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-interface InventoryItem {
-  id: number
-  title: string
-  quantity: number
-  unit: string
-  category: string
-  item_image: {
-    url: string
-  }
-}
+const inventoriesStore = useInventoriesStore()
+const { inventories } = storeToRefs(inventoriesStore)
 
-const inventories = ref<InventoryItem[]>([])
 const isLoading = ref(true)
+const newTitle = ref<string>()
 
 const getInventory = async () => {
   isLoading.value = true
   try {
-    const response = await axios.get('https://web.zaico.co.jp/api/v1/inventories', {
+    const response = await axios.get(`${import.meta.env.VITE_API_ENDPOINT}/inventories`, {
       headers: {
         Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`,
       },
     })
-    inventories.value = response.data
-    console.log(response.data)
+    inventoriesStore.updateInventories(response.data as InventoryItem[])
+    console.log(inventories)
   } catch (error) {
     console.error(error)
   } finally {
@@ -66,8 +66,35 @@ const getInventory = async () => {
   }
 }
 
+const createNewItem = async () => {
+  if (newTitle.value == null) {
+    // TODO: err message
+    return
+  }
+  // TODO: ローディング共通化
+  isLoading.value = true
+  axios
+    .post(
+      `${import.meta.env.VITE_API_ENDPOINT}/inventories`,
+      { title: newTitle.value },
+      {
+        headers: {
+          Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`,
+        },
+      },
+    )
+    .then(() => {
+      newTitle.value = undefined
+      getInventory()
+    })
+}
+
 onMounted(() => {
   getInventory()
+})
+
+onBeforeUnmount(() => {
+  inventoriesStore.$reset()
 })
 </script>
 
