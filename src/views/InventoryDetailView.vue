@@ -1,14 +1,12 @@
 <template>
   <template v-if="isLoading">
-    <div class="loading">
-      データを読み込み中...
-    </div>
+    <div class="loading">データを読み込み中...</div>
   </template>
 
   <template v-else-if="inventory">
     <div class="inventory-detail">
       <div class="inventory-detail__image">
-        <img :src="inventory.item_image.url" alt="">
+        <img :src="inventory.item_image.url" alt="" />
       </div>
 
       <div class="inventory-detail__info">
@@ -35,44 +33,47 @@
 
 <script setup lang="ts">
 import axios from 'axios'
-import { ref, onMounted } from "vue";
-import { useRoute } from 'vue-router';
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 
 interface InventoryItem {
-  id: number;
-  title: string;
-  quantity: number;
-  unit: string;
-  category: string;
-  place: string;
+  id: number
+  title: string
+  quantity: number
+  unit: string
+  category: string
+  place: string
   item_image: {
-    url: string;
+    url: string
   }
 }
 
-const route = useRoute();
-const inventory = ref<InventoryItem | null>(null);
+const route = useRoute()
+const inventory = ref<InventoryItem | null>(null)
 const isLoading = ref(false)
 
 const getInventoryDetail = async () => {
   isLoading.value = true
   try {
-    const response = await axios.get(`https://web.zaico.co.jp/api/v1/inventories/${route.params.id}`, {
-      headers: {
-        Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`
-      }
-    })
-    inventory.value = response.data;
-    console.log(response.data);
+    const response = await axios.get(
+      `https://web.zaico.co.jp/api/v1/inventories/${route.params.id}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`,
+        },
+      },
+    )
+    inventory.value = response.data
+    console.log(response.data)
   } catch (error) {
-    console.error(error);
+    console.error(error)
   } finally {
-    isLoading.value = false;
+    isLoading.value = false
   }
 }
 
 onMounted(() => {
-  getInventoryDetail();
+  getInventoryDetail()
 })
 </script>
 
@@ -121,4 +122,4 @@ onMounted(() => {
   font-size: 1.2rem;
   color: var(--color-text);
 }
-</style> 
+</style>
