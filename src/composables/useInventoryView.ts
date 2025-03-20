@@ -1,9 +1,12 @@
-import type { InventoryItem } from '@/stores/inventory'
+import { useInventoriesStore } from '@/stores/inventory'
 import { axiosGet } from '@/utils/axios'
+import { storeToRefs } from 'pinia'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 export const useInventoryView = () => {
-  const inventories = ref<InventoryItem[]>([])
+  const store = useInventoriesStore()
+  const { inventories } = storeToRefs(store)
+
   const isLoading = ref(true)
 
   const getInventory = async () => {

@@ -11,7 +11,7 @@
     </thead>
     <tbody>
       <tr v-for="inventory in inventories" :key="inventory.id">
-        <td><img :src="inventory.item_image.url" alt="" /></td>
+        <td><img v-if="inventory.item_image.url" :src="inventory.item_image.url" alt="" /></td>
         <td>{{ inventory.title }}</td>
         <td>{{ inventory.quantity }} {{ inventory.unit }}</td>
         <td>{{ inventory.category }}</td>
@@ -32,7 +32,7 @@ defineProps<{
 
 <style scoped lang="scss">
 .inventory-table {
-  max-width: 1000px;
+  width: 100%;
   border: 1px solid var(--color-border);
 
   thead {

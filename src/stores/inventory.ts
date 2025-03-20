@@ -4,12 +4,16 @@ import { defineStore } from 'pinia'
 export interface InventoryItem {
   id: number
   title: string
-  quantity: number
+  quantity: number | null
   unit: string
   category: string
+  categories: string[]
+  state: string
   place: string
+  etc: string
+  code: string
   item_image: {
-    url: string
+    url: string | null
   }
 }
 
@@ -19,30 +23,9 @@ export interface InventoryItem {
 export const useInventoriesStore = defineStore('inventories', () => {
   const inventories = ref<InventoryItem[]>([])
 
-  const updateInventories = (newData: InventoryItem[]) => {
-    inventories.value = newData
-  }
-
   const $reset = () => {
     inventories.value = []
   }
 
-  return { inventories, updateInventories, $reset }
-})
-
-/**
- * 在庫詳細情報のストア
- */
-export const useInventoryStore = defineStore('inventory', () => {
-  const inventory = ref<InventoryItem>()
-
-  const updateInventory = (newData?: InventoryItem) => {
-    inventory.value = newData
-  }
-
-  const $reset = () => {
-    inventory.value = undefined
-  }
-
-  return { inventory, updateInventory, $reset }
+  return { inventories, $reset }
 })
