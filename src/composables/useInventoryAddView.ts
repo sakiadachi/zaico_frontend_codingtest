@@ -1,28 +1,17 @@
-import axios from 'axios'
+import { axiosPost } from '@/utils/axios'
 import { ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 
 export const useInventoryAddView = () => {
   const newTitle = ref<string>('')
-  const isLoading = ref(true)
-
+  const isLoading = ref(false)
   const resetTitle = () => {
     newTitle.value = ''
   }
 
   const createNewItem = async () => {
-    // TODO: ローディング共通化
     isLoading.value = true
-    axios
-      .post(
-        `${import.meta.env.VITE_API_ENDPOINT}/inventories`,
-        { title: newTitle.value },
-        {
-          headers: {
-            Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`,
-          },
-        },
-      )
+    axiosPost('/inventories', { title: newTitle.value })
       .then(() => {
         resetTitle()
       })
@@ -39,11 +28,13 @@ export const useInventoryAddView = () => {
     if (window.confirm('編集内容が失われます。よろしいですか?')) {
       return next()
     }
+    resetTitle()
     next(false)
   })
 
   return {
     newTitle,
+    isLoading,
     resetTitle,
     createNewItem,
   }

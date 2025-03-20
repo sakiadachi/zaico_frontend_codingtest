@@ -1,5 +1,5 @@
 import type { InventoryItem } from '@/stores/inventory'
-import axios from 'axios'
+import { axiosGet } from '@/utils/axios'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 export const useInventoryView = () => {
@@ -8,18 +8,10 @@ export const useInventoryView = () => {
 
   const getInventory = async () => {
     isLoading.value = true
-    // TODO: 共通処理
-    axios
-      .get(`${import.meta.env.VITE_API_ENDPOINT}/inventories`, {
-        headers: {
-          Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`,
-        },
-      })
+
+    axiosGet('/inventories')
       .then((res) => {
         inventories.value = res.data
-      })
-      .catch((err) => {
-        console.error(err)
       })
       .finally(() => {
         isLoading.value = false
