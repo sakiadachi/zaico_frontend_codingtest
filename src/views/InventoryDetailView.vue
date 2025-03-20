@@ -29,9 +29,12 @@
       </div>
     </div>
   </template>
+
+  <GoBackToInventoryLink class="inventory-detail__go-back" />
 </template>
 
 <script setup lang="ts">
+import GoBackToInventoryLink from '@/components/layouts/GoBackToInventoryLink.vue'
 import { useInventoryStore } from '@/stores/inventory'
 import axios from 'axios'
 import { storeToRefs } from 'pinia'
@@ -106,6 +109,10 @@ onBeforeUnmount(() => {
     dd {
       margin: 0;
     }
+  }
+
+  &__go-back {
+    margin-top: 10rem;
   }
 }
 

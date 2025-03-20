@@ -1,17 +1,16 @@
 <template>
   <div class="inventory-add-view">
-    <NewInventoryForm v-model="newTitle" @on-submit="createNewItem" />
-    <div class="inventory-add-view__go-back">
-      <router-link to="/">《 一覧へ戻る</router-link>
-    </div>
+    <NewInventoryForm v-model="newTitle" :is-loading @on-submit="createNewItem" />
+    <GoBackToInventoryLink class="inventory-add-view__go-back" />
   </div>
 </template>
 
 <script setup lang="ts">
+import GoBackToInventoryLink from '@/components/layouts/GoBackToInventoryLink.vue'
 import NewInventoryForm from '@/components/templates/inventory-add/NewInventoryForm.vue'
 import { useInventoryAddView } from '@/composables/useInventoryAddView'
 
-const { newTitle, createNewItem } = useInventoryAddView()
+const { newTitle, isLoading, createNewItem } = useInventoryAddView()
 </script>
 
 <style scoped lang="scss">
@@ -21,8 +20,6 @@ const { newTitle, createNewItem } = useInventoryAddView()
   margin: 0 auto;
 
   &__go-back {
-    display: flex;
-    justify-content: center;
     margin-top: 10rem;
   }
 }

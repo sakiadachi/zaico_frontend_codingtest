@@ -26,6 +26,10 @@ button {
   border: 0;
   border-radius: 0.25rem;
   font-size: 1rem;
+
+  &:disabled {
+    background-color: grey;
+  }
 }
 
 .medium {
