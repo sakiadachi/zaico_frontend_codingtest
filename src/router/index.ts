@@ -10,6 +10,11 @@ const router = createRouter({
       component: InventoryView,
     },
     {
+      path: '/add',
+      name: 'inventory-add',
+      component: () => import('../views/InventoryAddView.vue'),
+    },
+    {
       path: '/inventory/:id',
       name: 'inventory-detail',
       component: () => import('../views/InventoryDetailView.vue'),

@@ -2,14 +2,13 @@
   <header>
     <h1>在庫管理</h1>
     <nav>
-      <RouterLink to="/">一覧</RouterLink>
+      <router-link to="/">一覧</router-link>
+      <router-link to="/add">新規登録</router-link>
     </nav>
   </header>
 </template>
 
-<script setup lang="ts">
-import { RouterLink } from 'vue-router'
-</script>
+<script setup lang="ts"></script>
 
 <style scoped lang="scss">
 header {
