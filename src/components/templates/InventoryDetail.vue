@@ -26,7 +26,7 @@
 </template>
 
 <script setup lang="ts">
-import type { InventoryItem } from '@/stores/inventory'
+import type { InventoryItem } from '@/utils/api'
 
 const props = defineProps<{
   inventory: InventoryItem

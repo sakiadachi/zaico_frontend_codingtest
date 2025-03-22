@@ -23,10 +23,10 @@
   </table>
 </template>
 <script setup lang="ts">
-import type { InventoryItem } from '@/stores/inventory'
+import type { InventoryItem } from '@/utils/api'
 
 defineProps<{
-  inventories: InventoryItem[]
+  inventories?: InventoryItem[]
 }>()
 </script>
 

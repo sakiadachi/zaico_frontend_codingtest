@@ -1,4 +1,4 @@
-import { axiosPost } from '@/utils/axios'
+import { createInventory } from '@/utils/api'
 import { ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 
@@ -9,9 +9,10 @@ export const useInventoryAddView = () => {
     newTitle.value = ''
   }
 
-  const createNewItem = async () => {
+  const createNewItem = () => {
     isLoading.value = true
-    axiosPost('/inventories', { title: newTitle.value })
+
+    createInventory({ title: newTitle.value })
       .then(() => {
         resetTitle()
       })
@@ -25,6 +26,7 @@ export const useInventoryAddView = () => {
     if (newTitle.value.length === 0) {
       return next()
     }
+    // 編集中の場合、確認ダイアログを表示する
     if (window.confirm('編集内容が失われます。よろしいですか?')) {
       return next()
     }

@@ -14,9 +14,15 @@
 <script setup lang="ts">
 import GoBackToInventoryLink from '@/components/layouts/GoBackToInventoryLink.vue'
 import InventoryDetail from '@/components/templates/InventoryDetail.vue'
-import { useInventoryDetailView } from '@/composables/useInventoryDetailView'
+import { useAsyncState } from '@/utils/useAsyncState'
+import { getInventoryDetail } from '@/utils/api'
+import { useRoute } from 'vue-router'
 
-const { inventory, isLoading } = useInventoryDetailView()
+const route = useRoute()
+
+const { state: inventory, isLoading } = useAsyncState(
+  getInventoryDetail(route.params.id.toString()),
+)
 </script>
 
 <style scoped lang="scss">

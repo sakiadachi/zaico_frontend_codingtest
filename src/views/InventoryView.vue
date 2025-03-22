@@ -6,20 +6,18 @@
       </div>
     </div>
     <div>
-      <template v-if="isLoading">
-        <div class="loading">データを読み込み中...</div>
-      </template>
-
-      <InventoryTable v-else :inventories />
+      <p v-if="isLoading" class="inventories-page__loading">処理中...</p>
+      <InventoryTable v-else :inventories="state" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import InventoryTable from '@/components/templates/inventory/InventoryTable.vue'
-import { useInventoryView } from '@/composables/useInventoryView'
+import { useAsyncState } from '@/utils/useAsyncState'
+import { getInventories, type InventoryItem } from '@/utils/api'
 
-const { inventories, isLoading } = useInventoryView()
+const { state, isLoading } = useAsyncState<InventoryItem[]>(getInventories())
 </script>
 
 <style scoped lang="scss">
@@ -39,14 +37,12 @@ const { inventories, isLoading } = useInventoryView()
     display: flex;
     justify-content: end;
   }
-}
 
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
-  font-size: 1.2rem;
-  color: var(--color-text);
+  &__loading {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+  }
 }
 </style>
