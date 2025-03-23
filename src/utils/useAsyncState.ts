@@ -1,5 +1,4 @@
 import type { AxiosResponse } from 'axios'
-import axios from 'axios'
 import { ref, type Ref } from 'vue'
 
 type useAsyncStateReturnType<T> = {
