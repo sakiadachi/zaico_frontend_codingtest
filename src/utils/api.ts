@@ -1,5 +1,8 @@
 import { axiosInstance } from './axios'
 
+/**
+ * 在庫の型
+ */
 export interface InventoryItem {
   id: number
   title: string
@@ -16,17 +19,23 @@ export interface InventoryItem {
   }
 }
 
+/**
+ * 在庫新規登録で使用する型
+ */
+export type InventoryItemRegistrationType = Pick<InventoryItem, 'title'>
+
 /** 在庫一覧を取得する */
-export const getInventories = () => axiosInstance.get('/inventories')
+export const getInventories = () => axiosInstance.get<InventoryItem[]>('/inventories')
 
 /**
  * 在庫詳細を取得する
  * @param id 在庫のID
  */
-export const getInventoryDetail = (id: string) => axiosInstance.get(`/inventories/${id}`)
+export const getInventoryDetail = (id: string) =>
+  axiosInstance.get<InventoryItem>(`/inventories/${id}`)
 
 /**
  * 在庫を作成する
  */
-export const createInventory = (item: { title: string }) =>
+export const createInventory = (item: InventoryItemRegistrationType) =>
   axiosInstance.post(`/inventories/`, item)
