@@ -59,7 +59,7 @@ export default function useAsyncState<T>(
 
     isLoading.value = true
 
-    promiseCallback()
+    return promiseCallback()
       .then((response) => {
         if (response && response.data) {
           state.value = response.data

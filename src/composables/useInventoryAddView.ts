@@ -13,7 +13,8 @@ export default function useInventoryAddView() {
   }
 
   const createNewItem = () =>
-    request().finally(() => {
+    request().then(() => {
+      // 成功したらタイトルを初期化する
       resetTitle()
     })
 
