@@ -13,7 +13,7 @@ type useAsyncStateReturnType<T> = {
   /**
    * リクエスト関数
    */
-  request: () => Promise<void | AxiosResponse<T, any>>
+  request: () => Promise<void | AxiosResponse<T, unknown>>
 }
 
 /**
@@ -57,17 +57,15 @@ export default function useAsyncState<T>(
     _resetState()
 
     isLoading.value = true
-
-    return promiseCallback()
-      .then((response) => {
-        if (response && response.data) {
-          state.value = response.data
-        }
-        return response
-      })
-      .finally(() => {
-        isLoading.value = false
-      })
+    try {
+      const response = await promiseCallback()
+      if (response && response.data) {
+        state.value = response.data
+      }
+      return response
+    } finally {
+      isLoading.value = false
+    }
   }
 
   return {

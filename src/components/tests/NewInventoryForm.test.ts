@@ -12,7 +12,8 @@ describe('NewInventoryForm', () => {
       },
     })
     const instance = wrapper.vm
-    // TODO: anyを使わない コンポーネントのmothodの型がうまく取得できていない
+    // TODO: anyを使わない コンポーネントのmethodの型がうまく取得できていない
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onSubmit = (instance as any).onSubmit
 
     onSubmit()
@@ -27,7 +28,8 @@ describe('NewInventoryForm', () => {
     })
 
     const instance = wrapper.vm
-    // TODO: anyを使わない コンポーネントのmothodの型がうまく取得できていない
+    // TODO: anyを使わない コンポーネントのmethodの型がうまく取得できていない
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onSubmit = (instance as any).onSubmit
 
     onSubmit()

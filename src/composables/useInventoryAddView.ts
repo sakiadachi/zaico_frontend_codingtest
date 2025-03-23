@@ -12,11 +12,11 @@ export default function useInventoryAddView() {
     newTitle.value = ''
   }
 
-  const createNewItem = () =>
-    request().then(() => {
-      // 成功したらタイトルを初期化する
-      resetTitle()
-    })
+  const createNewItem = async () => {
+    await request()
+    // 成功したらタイトルを初期化する
+    resetTitle()
+  }
 
   onBeforeRouteLeave((to, from, next) => {
     // 入力値が存在しない場合
@@ -27,7 +27,7 @@ export default function useInventoryAddView() {
     if (window.confirm('編集内容が失われます。よろしいですか?')) {
       return next()
     }
-    next(false)
+    return next(false)
   })
 
   return {
