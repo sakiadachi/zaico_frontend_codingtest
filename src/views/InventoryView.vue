@@ -14,7 +14,7 @@
 
 <script setup lang="ts">
 import InventoryTable from '@/components/templates/inventory/InventoryTable.vue'
-import { useInventoryView } from '@/composables/useInventoryView'
+import useInventoryView from '@/composables/useInventoryView'
 
 const { inventories, isLoading } = useInventoryView()
 </script>

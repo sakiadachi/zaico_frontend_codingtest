@@ -3,12 +3,10 @@ import useAsyncState from '@/utils/useAsyncState'
 import { ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 
-export const useInventoryAddView = () => {
+export default function useInventoryAddView() {
   const newTitle = ref<string>('')
 
-  const _createInventory = () => createInventory({ title: newTitle.value })
-
-  const { isLoading, request } = useAsyncState(_createInventory)
+  const { isLoading, request } = useAsyncState(() => createInventory({ title: newTitle.value }))
 
   const resetTitle = () => {
     newTitle.value = ''

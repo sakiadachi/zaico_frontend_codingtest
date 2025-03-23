@@ -3,7 +3,7 @@ import { getInventories } from '@/utils/api'
 import useAsyncState from '@/utils/useAsyncState'
 import { storeToRefs } from 'pinia'
 
-export const useInventoryView = () => {
+export default function () {
   const store = useInventoriesStore()
   const { inventories } = storeToRefs(store)
 

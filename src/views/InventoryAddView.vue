@@ -8,7 +8,7 @@
 <script setup lang="ts">
 import GoBackToInventoryLink from '@/components/layouts/GoBackToInventoryLink.vue'
 import NewInventoryForm from '@/components/templates/inventory-add/NewInventoryForm.vue'
-import { useInventoryAddView } from '@/composables/useInventoryAddView'
+import useInventoryAddView from '@/composables/useInventoryAddView'
 
 const { newTitle, isLoading, createNewItem } = useInventoryAddView()
 </script>
