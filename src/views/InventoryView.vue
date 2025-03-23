@@ -7,17 +7,16 @@
     </div>
     <div>
       <p v-if="isLoading" class="inventories-page__loading">処理中...</p>
-      <InventoryTable v-else :inventories="state" />
+      <InventoryTable v-else :inventories="inventories" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import InventoryTable from '@/components/templates/inventory/InventoryTable.vue'
-import { useAsyncState } from '@/utils/useAsyncState'
-import { getInventories, type InventoryItem } from '@/utils/api'
+import { useInventoryView } from '@/composables/useInventoryView'
 
-const { state, isLoading } = useAsyncState<InventoryItem[]>(getInventories())
+const { inventories, isLoading } = useInventoryView()
 </script>
 
 <style scoped lang="scss">
