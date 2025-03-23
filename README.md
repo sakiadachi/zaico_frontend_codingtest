@@ -1,11 +1,15 @@
 # 株式会社ZAICO Webフロントエンドエンジニアコーディングテスト
+
 ## 概要
+
 本プロジェクトは株式会社ZAICO（以下弊社）が、弊社に Webフロントエンドエンジニアを希望する方に出す課題のベースプロジェクトです。 下記の概要を詳しく読んだ上で課題を取り組んでください。
 
 ## Webアプリ仕様
+
 zaico API を利用して、在庫情報を取得・表示と作成をするWebアプリです。
 
 ### zaico APIの仕様と使い方
+
 API 仕様は以下の通りです。
 
 [zaico API Document](https://zaicodev.github.io/zaico_api_doc/)
@@ -22,12 +26,13 @@ Webアプリで動作確認をスムーズに行えるように、まずはzaico
 ※ 環境は適宜更新してください。
 
 ### Webアプリの動作
+
 1. 登録されている在庫一覧の表示
 2. 在庫詳細データの表示
 
 ## 課題取り組み方法
 
-Issues を確認した上、本プロジェクトを [**Duplicate** してください](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository)（Fork しないようにしてください。必要ならプライベートリポジトリにしても大丈夫です）。今後のコミットは全てご自身のリポジトリで行ってください。  
+Issues を確認した上、本プロジェクトを [**Duplicate** してください](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository)（Fork しないようにしてください。必要ならプライベートリポジトリにしても大丈夫です）。今後のコミットは全てご自身のリポジトリで行ってください。
 
 次の選考を開始する前までに [`課題`](https://github.com/zaicodev/zaico_webfrontend_codingtest/issues/1) を確認・対応し、出来た所までで問題ありませんので、リポジトリのアドレスをご連絡ください。
 

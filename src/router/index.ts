@@ -1,4 +1,4 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import InventoryView from '../views/InventoryView.vue'
 
 const router = createRouter({
@@ -8,6 +8,11 @@ const router = createRouter({
       path: '/',
       name: 'inventory',
       component: InventoryView,
+    },
+    {
+      path: '/add',
+      name: 'inventory-add',
+      component: () => import('../views/InventoryAddView.vue'),
     },
     {
       path: '/inventory/:id',

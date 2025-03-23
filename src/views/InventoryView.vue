@@ -1,107 +1,47 @@
 <template>
-  <main>
-    <template v-if="isLoading">
-      <div class="loading">
-        データを読み込み中...
+  <div class="inventories-page">
+    <div class="inventories-page__add-btn">
+      <div>
+        <router-link to="/add">➕新規登録</router-link>
       </div>
-    </template>
-
-    <template v-else>
-      <table class="inventory-table">
-        <thead>
-          <tr>
-            <th class="inventory-table__img">写真</th>
-            <th class="inventory-table__title">商品名</th>
-            <th>在庫数</th>
-            <th>カテゴリ</th>
-            <th class="inventory-table__more"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="inventory in inventories">
-            <td><img :src="inventory.item_image.url" alt=""></td>
-            <td>{{ inventory.title }}</td>
-            <td>{{ inventory.quantity }}  {{ inventory.unit }}</td>
-            <td>{{ inventory.category }}</td>
-            <td>
-              <router-link :to="`/inventory/${inventory.id}`">詳細</router-link>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </template>
-  </main>
+    </div>
+    <div>
+      <p v-if="isLoading" class="inventories-page__loading">処理中...</p>
+      <InventoryTable v-else :inventories="inventories" />
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import axios from 'axios'
-import { ref, onMounted } from "vue";
+import InventoryTable from '@/components/templates/inventory/InventoryTable.vue'
+import useInventoryView from '@/composables/useInventoryView'
 
-interface InventoryItem {
-  id: number;
-  title: string;
-  quantity: number;
-  unit: string;
-  category: string;
-  item_image: {
-    url: string;
-  };
-}
-
-const inventories = ref<InventoryItem[]>([])
-const isLoading = ref(true)
-
-const getInventory = async () => {
-  isLoading.value = true
-  try {
-    const response = await axios.get('https://web.zaico.co.jp/api/v1/inventories', {
-      headers: {
-        Authorization: 'Bearer ' + `${import.meta.env.VITE_API_TOKEN}`
-      }
-    })
-    inventories.value = response.data
-    console.log(response.data)
-  } catch (error) {
-    console.error(error)
-  } finally {
-    isLoading.value = false
-  }
-}
-
-onMounted(() => {
-  getInventory()
-})
+const { inventories, isLoading } = useInventoryView()
 </script>
 
 <style scoped lang="scss">
-.inventory-table {
-  max-width: 1000px;
-  margin: 40px auto;
-
-  thead {
-    tr {
-      border-bottom: 1px solid var(--color-border);
-    }
-  }
-
-  &__img {
-    width: 100px;
-  }
-
-  &__title {
-    width: 50%;
-  }
-  &__more {
-    width: 60px;
-  }
-}
-
-.loading {
+.inventories-page {
+  padding: 0 1rem;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 300px;
-  font-size: 1.2rem;
-  color: var(--color-text);
+  flex-direction: column;
+
+  & > * {
+    padding: 2rem 0 0;
+    max-width: 50rem;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__add-btn {
+    display: flex;
+    justify-content: end;
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+  }
 }
 </style>
